@@ -68,6 +68,11 @@ class App extends Component {
         return (
         <Provider>
             <div className="App">
+                <MyContext.Consumer>
+                    {({viewer}) => (
+                        <h1>{viewer ? `Welcome ${viewer}` : 'Log in yo'}</h1>
+                    )}
+                </MyContext.Consumer>
                 <Nav />
             </div>
         </Provider>
