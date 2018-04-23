@@ -17,9 +17,13 @@ class Provider extends Component {
 
     render(){
         return <MyContext.Provider value={{
-            viewer: this.state.viewer,
-            logIn: this.logIn,
-            logOut: this.logOut,
+            state: {
+                viewer: this.state.viewer,
+            },
+            actions: {
+                logIn: this.logIn,
+                logOut: this.logOut,
+            }
         }}> {this.props.children} </MyContext.Provider>
         
     }
@@ -31,7 +35,8 @@ class LoginForm extends Component {
     render() {
         return <MyContext.Consumer>
             {(value) => {
-                const { viewer, logIn, logOut } = value;
+                const { viewer } = value.state;
+                const { logIn, logOut } = value.actions;
                 return viewer ? (
                     <React.Fragment>
                         <h3>You are logged in as {viewer}</h3>
@@ -69,7 +74,7 @@ class App extends Component {
         <Provider>
             <div className="App">
                 <MyContext.Consumer>
-                    {({viewer}) => (
+                    {({ state: { viewer } }) => (
                         <h1>{viewer ? `Welcome ${viewer}` : 'Log in yo'}</h1>
                     )}
                 </MyContext.Consumer>
